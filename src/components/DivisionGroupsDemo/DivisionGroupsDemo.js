@@ -34,7 +34,7 @@ function DivisionGroupsDemo({
           gridTemplateColumns: "1fr 1fr",
           gridTemplateRows: "1fr 1fr",
         };
-
+  
   return (
     <LayoutGroup>
       <Card as="section" className={styles.wrapper}>
@@ -60,6 +60,7 @@ function DivisionGroupsDemo({
                   const uniqueItemId = `${itemIdPrefix}-${itemIdSuffix}`;
                   return (
                     <motion.div
+                      data-key={uniqueItemId}
                       layoutId={uniqueItemId}
                       key={uniqueItemId}
                       className={styles.item}
@@ -74,9 +75,17 @@ function DivisionGroupsDemo({
         {includeRemainderArea && (
           <div className={styles.remainderArea}>
             <p className={styles.remainderHeading}>Remainder Area</p>
-
+            
             {range(remainder).map((index) => {
-              return <div key={index} className={styles.item} />;
+              const reversedIndex = numOfItems - index -1;
+              const uniqueItemId=`${itemIdPrefix}-${reversedIndex}`;
+              return (
+                <motion.div
+                  layoutId={`${uniqueItemId}`}
+                  key={`${uniqueItemId}`}
+                  className={styles.item}
+                />
+              );
             })}
           </div>
         )}
