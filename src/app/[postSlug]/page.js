@@ -6,6 +6,8 @@ import BlogHero from '@/components/BlogHero';
 import styles from './postSlug.module.css';
 import { loadBlogPost } from '@/helpers/file-helpers';
 import { BLOG_TITLE } from '@/constants';
+import CodeSnippet from '@/components/CodeSnippet';
+import { Code } from 'bright';
 
 export async function generateMetadata({ params }) {
   const {frontmatter} = await loadBlogPost(params.postSlug);
@@ -26,7 +28,11 @@ async function BlogPost({params}) {
         publishedOn={frontmatter.publishedOn}
       />
       <div className={styles.page}>
-       <MDXRemote source={content}/>
+       <MDXRemote 
+       components={{
+         pre: CodeSnippet
+       }}
+        source={content}/>
       </div>
     </article>
   );
