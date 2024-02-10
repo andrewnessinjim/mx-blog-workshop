@@ -16,6 +16,7 @@ async function Home() {
       {blogPosts.map(blogPost => (
         <BlogSummaryCard
           key={blogPost.slug}
+          slug={blogPost.slug}
           title={blogPost.title}
           abstract={blogPost.abstract}
           publishedOn={blogPost.publishedOn}/>
