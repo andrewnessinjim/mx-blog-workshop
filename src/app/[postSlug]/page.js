@@ -15,10 +15,9 @@ export async function generateMetadata({ params }) {
   try {
     blogPost = await loadBlogPost(params.postSlug);
   } catch(e){
-    notFound();
+    return null;
   }
-  console.log(blogPost);
-
+  
   const {frontmatter} = blogPost;
   return {
     title: `${frontmatter.title} • ${BLOG_TITLE}`,
@@ -27,7 +26,14 @@ export async function generateMetadata({ params }) {
 }
 
 async function BlogPost({params}) {
-  const {frontmatter, content} = await loadBlogPost(params.postSlug);
+  let blogPost;
+  try {
+    blogPost = await loadBlogPost(params.postSlug);
+  } catch(e){
+    notFound();
+  }
+
+  const {frontmatter, content} = blogPost;
 
   return (
     <article className={styles.wrapper}>
