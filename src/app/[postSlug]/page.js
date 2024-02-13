@@ -7,11 +7,19 @@ import styles from './postSlug.module.css';
 import { loadBlogPost } from '@/helpers/file-helpers';
 import { BLOG_TITLE } from '@/constants';
 import MDX_COMPONENTS_MAP from '@/helpers/mdx-components';
+import { notFound } from 'next/navigation';
 
 
 export async function generateMetadata({ params }) {
-  const {frontmatter} = await loadBlogPost(params.postSlug);
+  let blogPost;
+  try {
+    blogPost = await loadBlogPost(params.postSlug);
+  } catch(e){
+    notFound();
+  }
+  console.log(blogPost);
 
+  const {frontmatter} = blogPost;
   return {
     title: `${frontmatter.title} • ${BLOG_TITLE}`,
     description: frontmatter.abstract
